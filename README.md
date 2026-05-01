@@ -9,11 +9,19 @@ Ethara is a premium project management application built with Next.js, Prisma, a
 - **Premium Dashboard**: Visual summary of project and task progress.
 - **RBAC**: Admin and Member roles for access control.
 
-## ⚙️ Tech Stack
+## 🛠️ Tech Stack
 - **Frontend**: Next.js 14 (App Router), Vanilla CSS (Premium Design System).
 - **Backend**: Next.js API Routes.
-- **Database**: Prisma ORM with PostgreSQL (SQLite for local dev).
+- **Database**: Prisma ORM with PostgreSQL.
 - **Auth**: JWT + Bcryptjs.
+
+## 🚀 Deployment
+This project is deployed using a hybrid cloud architecture:
+- **Web Application**: Hosted on **Vercel** for high-performance frontend delivery.
+- **Database**: Hosted on **Railway** using a managed PostgreSQL instance.
+
+*Note: The project was originally intended for full deployment on Railway, but was moved to Vercel for web hosting to leverage the free tier while maintaining the database on Railway's robust infrastructure.*
+
 
 ## 🛠️ Local Development
 
