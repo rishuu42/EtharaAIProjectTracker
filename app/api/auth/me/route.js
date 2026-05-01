@@ -25,6 +25,10 @@ export async function GET(req) {
 
     return new Response(JSON.stringify({ user }), { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Authentication failed." }), { status: 500 });
+    console.error("Auth check error:", error);
+    return new Response(JSON.stringify({ 
+      error: "Authentication failed.", 
+      details: error.message 
+    }), { status: 500 });
   }
 }

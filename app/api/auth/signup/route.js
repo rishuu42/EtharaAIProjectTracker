@@ -40,7 +40,10 @@ export async function POST(req) {
       } 
     }), { status: 201 });
   } catch (error) {
-    console.error("Signup error:", error);
-    return new Response(JSON.stringify({ error: "Unable to signup." }), { status: 500 });
+    console.error("Signup error details:", error);
+    return new Response(JSON.stringify({ 
+      error: "Unable to signup.", 
+      details: error.message 
+    }), { status: 500 });
   }
 }

@@ -30,7 +30,10 @@ export async function POST(req) {
       } 
     }), { status: 200 });
   } catch (error) {
-    console.error("Login error:", error);
-    return new Response(JSON.stringify({ error: "Unable to login." }), { status: 500 });
+    console.error("Login error details:", error);
+    return new Response(JSON.stringify({ 
+      error: "Unable to login.", 
+      details: error.message 
+    }), { status: 500 });
   }
 }

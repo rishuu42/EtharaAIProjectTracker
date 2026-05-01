@@ -31,7 +31,7 @@ export default function AuthPage() {
       const data = await res.json();
       
       if (!res.ok) {
-        setMessage(data.error || "Authentication failed");
+        setMessage(data.details ? `${data.error}: ${data.details}` : (data.error || "Authentication failed"));
       } else {
         localStorage.setItem("ethara-token", data.token);
         router.push("/dashboard");

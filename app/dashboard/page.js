@@ -102,7 +102,8 @@ export default function Dashboard() {
         loadData();
         setMessage("Project created successfully!");
       } else {
-        setMessage("Error: " + (data.error || "Failed to create project"));
+        const errorMsg = data.details ? `${data.error}: ${data.details}` : (data.error || "Failed to create project");
+        setMessage("Error: " + errorMsg);
       }
     } catch (err) {
       setMessage("Connection error. Please try again.");
@@ -128,7 +129,8 @@ export default function Dashboard() {
         loadData();
         setMessage("Task added successfully!");
       } else {
-        setMessage("Error: " + (data.error || "Failed to add task"));
+        const errorMsg = data.details ? `${data.error}: ${data.details}` : (data.error || "Failed to add task");
+        setMessage("Error: " + errorMsg);
       }
     } catch (err) {
       setMessage("Connection error. Please try again.");
