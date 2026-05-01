@@ -17,48 +17,7 @@ async function main() {
     },
   });
 
-  console.log("Admin user created: admin@ethara.ai / admin123");
-
-  // Create Sample Project
-  const project = await prisma.project.create({
-    data: {
-      name: "Strategic AI Roadmap",
-      description: "Defining the long-term vision for EtharaAI integration.",
-      ownerId: admin.id,
-    }
-  });
-
-  // Create Sample Tasks with Priorities
-  await prisma.task.createMany({
-    data: [
-      {
-        title: "Initial Market Analysis",
-        description: "Analyze competitors in the AI space.",
-        status: "done",
-        priority: "high",
-        projectId: project.id,
-        assigneeId: admin.id
-      },
-      {
-        title: "Infrastructure Scaling Plan",
-        description: "Plan for global server deployment.",
-        status: "in-progress",
-        priority: "medium",
-        projectId: project.id,
-        assigneeId: admin.id
-      },
-      {
-        title: "User Experience Audit",
-        description: "Review current dashboard accessibility.",
-        status: "todo",
-        priority: "low",
-        projectId: project.id,
-        assigneeId: admin.id
-      }
-    ]
-  });
-
-  console.log("Sample project and tasks seeded.");
+  console.log("Admin user created/updated: admin@ethara.ai / admin123");
 }
 
 main()

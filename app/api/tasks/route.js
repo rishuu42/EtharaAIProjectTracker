@@ -29,7 +29,7 @@ export async function GET(req) {
     const tasks = await prisma.task.findMany({
       where,
       include: {
-        project: { select: { name: true } },
+        project: { select: { id: true, name: true } },
         assignee: { select: { email: true } }
       },
       orderBy: { createdAt: "desc" }
@@ -72,7 +72,10 @@ export async function POST(req) {
       const user = await prisma.user.findUnique({
         where: { email: assigneeEmail.toLowerCase() }
       });
-      assigneeId = user?.id || null;
+      if (!user) {
+        return new Response(JSON.stringify({ error: `User with email "${assigneeEmail}" not found. They must sign up first.` }), { status: 400 });
+      }
+      assigneeId = user.id;
     }
 
     const task = await prisma.task.create({
@@ -116,12 +119,13 @@ export async function PUT(req) {
     }
 
     // Check if user has access to this project
+    const isAdmin = payload.role === "admin";
     const isOwner = task.project.ownerId === payload.id;
     const isMember = await prisma.projectMember.findUnique({
       where: { projectId_userId: { projectId: task.projectId, userId: payload.id } }
     });
 
-    if (!isOwner && !isMember) {
+    if (!isAdmin && !isOwner && !isMember) {
       return new Response(JSON.stringify({ error: "Access denied." }), { status: 403 });
     }
 

@@ -145,9 +145,14 @@ export default function Dashboard() {
         method: "PUT",
         body: JSON.stringify({ id: taskId, status })
       });
-      if (res.ok) loadData();
+      if (res.ok) {
+        loadData();
+      } else {
+        const data = await res.json();
+        setMessage("Error: " + (data.error || "Failed to update task"));
+      }
     } catch (err) {
-      console.error(err);
+      setMessage("Connection error. Please try again.");
     }
   };
 
@@ -156,6 +161,15 @@ export default function Dashboard() {
     const matchesProject = filterProject === "all" || task.projectId === filterProject;
     return matchesSearch && matchesProject;
   });
+
+  const scrollToTasks = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleViewTasks = (projectId) => {
+    setFilterProject(projectId);
+    scrollToTasks();
+  };
 
   if (loading && !user) return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>;
 
@@ -311,8 +325,20 @@ export default function Dashboard() {
         
         <div style={{ background: 'white', border: '1px solid #edf2f7', borderRadius: '8px', padding: '1.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--text-main)', textTransform: 'uppercase' }}>Active Tasks</h2>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>Showing {filteredTasks.length} tasks</span>
+            <h2 style={{ fontSize: '1rem', fontWeight: '900', color: 'var(--text-main)', textTransform: 'uppercase' }}>
+              {filterProject === "all" ? "Active Tasks" : `Project: ${projects.find(p => p.id === filterProject)?.name || 'Tasks'}`}
+            </h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              {filterProject !== "all" && (
+                <button 
+                  onClick={() => setFilterProject("all")}
+                  style={{ fontSize: '0.75rem', background: 'none', border: 'none', color: 'var(--primary)', fontWeight: '700', textDecoration: 'underline' }}
+                >
+                  Clear Filter
+                </button>
+              )}
+              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600' }}>Showing {filteredTasks.length} tasks</span>
+            </div>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -372,7 +398,13 @@ export default function Dashboard() {
                     <div style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: '700', textTransform: 'uppercase' }}>
                       Owner: {project.owner_email}
                     </div>
-                    <button className="btn-outline" style={{ padding: '0.4rem 0.8rem', fontSize: '0.7rem', borderRadius: '4px' }} onClick={() => setFilterProject(project.id)}>View Tasks</button>
+                    <button 
+                      className={filterProject === project.id ? "btn-primary" : "btn-outline"} 
+                      style={{ padding: '0.4rem 0.8rem', fontSize: '0.7rem', borderRadius: '4px' }} 
+                      onClick={() => handleViewTasks(project.id)}
+                    >
+                      {filterProject === project.id ? "Viewing" : "View Tasks"}
+                    </button>
                   </div>
                 </div>
               ))
