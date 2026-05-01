@@ -1,66 +1,37 @@
 # Ethara | Project & Task Management System
 
-Ethara is a premium project management application built with Next.js, Prisma, and PostgreSQL (compatible). It features role-based access control, real-time dashboard stats, and a modern glassmorphism design.
+This project was developed as a technical assignment for **Ethara AI**. It is a full-stack project and task management application designed to showcase a modern development workflow, premium UI/UX, and robust data management.
 
-## 🚀 Key Features
-- **Authentication**: Secure Login/Signup with JWT.
-- **Project Management**: Create projects and assign team members.
-- **Task Tracking**: Assign tasks, set due dates, and track status (Todo, In Progress, Done).
-- **Premium Dashboard**: Visual summary of project and task progress.
-- **RBAC**: Admin and Member roles for access control.
-
-## 🛠️ Tech Stack
-- **Frontend**: Next.js 14 (App Router), Vanilla CSS (Premium Design System).
-- **Backend**: Next.js API Routes.
-- **Database**: Prisma ORM with PostgreSQL.
-- **Auth**: JWT + Bcryptjs.
-
-## 🚀 Deployment
-This project is deployed using a hybrid cloud architecture:
-- **Web Application**: Hosted on **Vercel** for high-performance frontend delivery.
-- **Database**: Hosted on **Railway** using a managed PostgreSQL instance.
-
-*Note: The project was originally intended for full deployment on Railway, but was moved to Vercel for web hosting to leverage the free tier while maintaining the database on Railway's robust infrastructure.*
+I focused heavily on creating a high-end experience using glassmorphism and smooth transitions, ensuring the interface feels premium and intuitive.
 
 
-## 🛠️ Local Development
+## The Story Behind the Tech
+The app is built on Next.js 14 using the App Router. For the styling, I skipped the usual utility frameworks and went with Vanilla CSS to have total control over the look and feel. 
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+On the backend, I'm using Prisma to talk to a PostgreSQL database. It handles everything from user authentication (JWT + Bcrypt) to managing complex relationships between projects, team members, and tasks.
 
-2. **Environment Setup**:
-   Create a `.env` file:
-   ```env
-   DATABASE_URL="file:./dev.db"
-   JWT_SECRET="your-secret-key"
-   ```
+## How it's Hosted
+I originally tried to host everything on Railway, but ended up going with a hybrid setup:
+*   The App: Hosted on Vercel because their Next.js support is hard to beat.
+*   The Database: Still running on Railway, which handles the PostgreSQL instance.
 
-3. **Initialize Database**:
-   ```bash
-   npx prisma db push
-   node prisma/seed.js
-   ```
+This setup keeps the site fast while keeping the database management simple.
 
-4. **Run Dev Server**:
-   ```bash
-   npm run dev
-   ```
+## Features I Built
+*   Real Dashboard: Get a quick bird's-eye view of how many tasks are pending or completed.
+*   Team Access: It has full role-based access, meaning you can have Admins and regular Members with different permissions.
+*   Smooth Task Tracking: You can create projects, add members, and assign tasks with due dates and priorities.
 
-## 🌐 Deployment (Railway)
+## Getting Started Locally
+If you want to run this on your own machine:
 
-1. Connect your GitHub repo to [Railway](https://railway.app/).
-2. Add a **PostgreSQL** service in Railway.
-3. Set `DATABASE_URL` in Railway variables to your Postgres connection string.
-4. Update `prisma/schema.prisma` provider to `postgresql`:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-5. Railway will automatically build and deploy.
+1.  Clone the repo and run npm install.
+2.  Set up your .env file with a DATABASE_URL and a JWT_SECRET.
+3.  Run npx prisma db push to set up the tables.
+4.  Run node prisma/seed.js to create the default admin account.
+5.  Launch with npm run dev.
 
-## 📝 Demo Access
-- **Admin**: `admin@ethara.ai` / `admin123`
+Admin Credentials (Default):
+*   Email: admin@ethara.ai
+*   Password: admin123
+
